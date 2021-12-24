@@ -1,13 +1,15 @@
+import React from "react"
+import "./home.css"
 
 
-function App () {
-
-  return (
-    <div className="App">
-      主页
-    </div>
-
-  );
+export default class Home extends React.Component {
+  render () {
+    return (
+      <div className="home">
+        主页
+      </div>
+    )
+  }
 }
 
-export default App;
+

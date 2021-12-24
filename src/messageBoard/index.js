@@ -1,13 +1,15 @@
-import { useState } from "react";
+import React from "react"
+import "./messageBoard.css"
 
-function App () {
 
-  return (
-    <div className="App">
-      留言板
-    </div>
-
-  );
+export default class MessageBoard extends React.Component {
+  render () {
+    return (
+      <div className="message-board">
+        留言板
+      </div>
+    )
+  }
 }
 
-export default App;
+
