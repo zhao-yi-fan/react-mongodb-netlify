@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { /* useNavigate */ NavLink } from "react-router-dom";
 import React from "react"
 import "./top.css"
 
-function NavList () {
+/* function NavList () {
   let navigate = useNavigate();
   return (
     <>
@@ -11,20 +11,17 @@ function NavList () {
     </>
 
   )
-}
-export default class Top extends React.Component {
+} */
 
-  render () {
-    return (
-      <div className="top">{
-        NavList()
-      }
+function Nav () {
+  return (
+    <div className="top">
+      <NavLink to="/index" className="link">主页</NavLink>
+      <NavLink to="/messageBoard" className="link">留言板</NavLink>
+    </div>
 
-        {/* <NavLink to="/index" className="link">主页</NavLink>
-        <NavLink to="/messageBoard" className="link">留言板</NavLink> */}
-      </div>
-    )
-  }
+  )
 }
+export default Nav;
 
 
