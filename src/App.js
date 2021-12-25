@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate, NavLink } from "react
 import "./App.css";
 import Home from './home'
 import MessageBoard from './messageBoard'
+import Posts from './posts/index'
 
 function App () {
   return (
@@ -17,6 +18,7 @@ function App () {
       <Routes>
         <Route path="/index" element={<Home />}></Route>
         <Route path="/messageBoard" element={<MessageBoard />}></Route>
+        <Route path="/posts/:id" element={<Posts />}></Route>
         <Route path="*" element={<Navigate to="/index" />} />
       </Routes>
     </Router>
