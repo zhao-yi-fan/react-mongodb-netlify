@@ -1,19 +1,32 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
+import axios from 'axios';
 import "./home.css"
-import { postsJson } from '../postsData'
 import { useNavigate } from "react-router-dom"
 
 
 function ArticleListInit () {
+  const [data, setData] = useState({ postsJson: [] });
   const navigate = useNavigate()
   function handleClick (id) {
     navigate(`/posts/${id}`)
   }
+  useEffect(() => {
+    async function fetchData () {
 
-  return (postsJson.map((item, index) =>
-    <div className="posts-item" onClick={() => handleClick(item.id)} key={index}>
+      let res = await axios.get('/.netlify/functions/postAll');
+      console.log(res.data.data,'res.data.data==');
+      setData({postsJson: res.data.data});
+
+      console.log(data,'data.postsJson===');
+    }
+    fetchData()
+  },[])
+
+
+  return ((data.postsJson || []).map((item, index) =>
+    <div className="posts-item" onClick={() => handleClick(item._id)} key={index}>
       <div className="posts-title">{item.title}</div>
-      <div className="posts-cont" title={item.content}>{item.content}</div>
+      <div className="posts-cont" title={item.description}>{item.description}</div>
     </div>
   ))
 }
