@@ -53,22 +53,29 @@ function InitDetail () {
 
   async function handleClick () {
     console.log(formData, 'formData===');
-    let res = await axios.post(`/.netlify/functions/postContent`, {
-      title: formData.email,
-      description: formData.message,
-      contents: formData.message,
-      createTime: new Date().toISOString()
-    });
-    console.log(res.data.data, 'res.data.data==');
+    if (formData.email && formData.message) {
+      let res = await axios.post(`/.netlify/functions/postContent`, {
+        title: formData.email,
+        description: formData.message,
+        contents: formData.message,
+        createTime: new Date().toISOString()
+      });
+      alert('提交成功')
+      console.log(res.data.data, 'res.data.data==');
+    }
 
   }
 
   return (
     <div className="message-board">
       <div className="message-board-left">
+        <p className="form-title">邮箱：</p>
         <input type="email" value={formData.email} onChange={(e) => setFormValue('email', e.target.value)} />
+        <p className="form-title">发布内容：</p>
         <input type="text" value={formData.message} onChange={(e) => setFormValue('message', e.target.value)} />
-        <button onClick={() => handleClick()}>提交</button>
+        <div>
+          <button onClick={() => handleClick()}>提交</button>
+        </div>
 
       </div>
       <div className="message-board-right">
