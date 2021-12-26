@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 
 function ArticleListInit () {
-  const [data, setData] = useState({ postsJson: [] });
+  const [data, setData] = useState([]);
   const navigate = useNavigate()
   function handleClick (id) {
     navigate(`/posts/${id}`)
@@ -14,16 +14,15 @@ function ArticleListInit () {
     async function fetchData () {
 
       let res = await axios.get('/.netlify/functions/postAll');
-      console.log(res.data.data,'res.data.data==');
-      setData({postsJson: res.data.data});
+      console.log(res.data.data, 'res.data.data==');
+      setData(res.data.data);
 
-      console.log(data,'data.postsJson===');
     }
     fetchData()
-  },[])
+  }, [])
 
 
-  return ((data.postsJson || []).map((item, index) =>
+  return ((data || []).map((item, index) =>
     <div className="posts-item" onClick={() => handleClick(item._id)} key={index}>
       <div className="posts-title">{item.title}</div>
       <div className="posts-cont" title={item.description}>{item.description}</div>
