@@ -11,13 +11,13 @@ function App () {
         <div className="top">
           <div className="nav-list">
             <NavLink to="/index" className="link">主页</NavLink>
-            <NavLink to="/messageBoard" className="link">留言板</NavLink>
+            <NavLink to="/message-board" className="link">留言板</NavLink>
           </div>
         </div>
       </div>
       <Routes>
         <Route path="/index" element={<Home />}></Route>
-        <Route path="/messageBoard" element={<MessageBoard />}></Route>
+        <Route path="/message-board" element={<MessageBoard />}></Route>
         <Route path="/posts/:id" element={<Posts />}></Route>
         <Route path="*" element={<Navigate to="/index" />} />
       </Routes>
