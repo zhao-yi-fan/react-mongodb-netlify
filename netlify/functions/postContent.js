@@ -8,11 +8,12 @@ exports.handler = async function (event, context) {
   try {
     if (event.httpMethod === "POST") {
 
-      const {title,description,contents} = JSON.parse(event.body);
+      const {title,description,contents,createTime} = JSON.parse(event.body);
       const obj = {
         title,
         description,
-        contents
+        contents,
+        createTime
       }
       let r1 = await connection.model('posts').create(obj);
       return {

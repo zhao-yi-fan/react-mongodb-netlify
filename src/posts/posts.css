@@ -12,9 +12,18 @@
   box-shadow: 2px 2px 15px 0px #81817a;
 }
 .posts-detail .posts-title {
-  font-size: 28px;
-  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #252933;
+}
+.posts-detail .posts-title .title {
+  font-weight: bold;
+  font-size: 28px;
+}
+.posts-detail .posts-title .time{
+  width: 250px;
+  font-size: 14px;
 }
 .posts-detail .posts-content {
   text-indent: 2em;

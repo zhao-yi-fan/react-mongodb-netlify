@@ -9,6 +9,7 @@ exports.conn = async function () {
     title: String,
     description: String,
     contents: String,
+    createTime: String,
     // The schema is incomplete...
   });
 

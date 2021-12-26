@@ -20,6 +20,7 @@
   box-sizing: border-box;
   background-color: #fff;
   width: 1200px;
+  min-height: 500px;
   margin: 20px auto;
   padding: 15px 20px;
   overflow: hidden;
@@ -45,10 +46,18 @@
 }
 
 .posts-list .posts-item .posts-title {
-  line-height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   transition: all 0.5s;
+}
+.posts-list .posts-item .posts-title .title {
   font-weight: bold;
   font-size: 18px;
+}
+.posts-list .posts-item .posts-title .time{
+  width: 250px;
+  font-size: 14px;
 }
 .posts-list .posts-item .posts-cont {
   height: 30px;
