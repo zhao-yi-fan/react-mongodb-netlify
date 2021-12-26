@@ -6,14 +6,18 @@ exports.handler = async function (event, context) {
   console.log(event, 11111111111111111111111)
   const connection = await conn();
   try {
-    if (event.httpMethod === "GET") {
-      const { id } = event.queryStringParameters;
-      const ObjectId = require('mongodb').ObjectId;
-      let r = await connection.model('posts').find({ _id: ObjectId(id) })
-      console.log(r);
+    if (event.httpMethod === "POST") {
+
+      const {title,description,contents} = JSON.parse(event.body);
+      const obj = {
+        title,
+        description,
+        contents
+      }
+      let r1 = await connection.model('posts').create(obj);
       return {
         statusCode: 200,
-        body: JSON.stringify({ data: r }),
+        body: JSON.stringify({ data: r1._id }),
       };
     }
     else {
