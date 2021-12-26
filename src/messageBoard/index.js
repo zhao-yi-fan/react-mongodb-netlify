@@ -32,6 +32,7 @@ function ArticleListInit () {
 }
 
 function InitDetail () {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({ email: '', message: '' });
 
   /* useEffect(() => {
@@ -61,6 +62,7 @@ function InitDetail () {
         createTime: new Date().toISOString()
       });
       alert('提交成功')
+      navigate(`/index`)
       console.log(res.data.data, 'res.data.data==');
     }
 
