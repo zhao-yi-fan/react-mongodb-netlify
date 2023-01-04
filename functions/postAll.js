@@ -3,22 +3,14 @@ let {conn} = require('./db')
 // Reference: https://docs.netlify.com/functions/build-with-javascript/#synchronous-function-format
 exports.handler = async function (event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  console.log(event, 11111111111111111111111)
   const connection = await conn();
   try {
-    if (event.httpMethod === "POST") {
-
-      const {title,description,contents,createTime} = JSON.parse(event.body);
-      const obj = {
-        title,
-        description,
-        contents,
-        createTime
-      }
-      let r1 = await connection.model('posts').create(obj);
+    if (event.httpMethod === "GET") {
+      let r = await connection.model('posts').find({})
+      console.log(r, 'r==');
       return {
         statusCode: 200,
-        body: JSON.stringify({ data: r1._id }),
+        body: JSON.stringify({ data: r }),
       };
     }
     else {

@@ -12,7 +12,7 @@ function ArticleListInit () {
   }
   useEffect(() => {
     async function fetchData () {
-      let res = await axios.get('/.netlify/functions/postAll');
+      let res = await axios.get('/api/postAll');
       console.log(res.data.data, 'res.data.data==');
       setData(res.data.data.reverse().slice(0, 3));
     }
@@ -55,7 +55,7 @@ function InitDetail () {
   async function handleClick () {
     console.log(formData, 'formData===');
     if (formData.email && formData.message) {
-      let res = await axios.post(`/.netlify/functions/postContent`, {
+      let res = await axios.post(`/api/postContent`, {
         title: formData.email,
         description: formData.message,
         contents: formData.message,

@@ -12,7 +12,7 @@ function InitDetail () {
   useEffect(() => {
     async function fetchData () {
 
-      let res = await axios.get(`/.netlify/functions/getById?id=${id}`);
+      let res = await axios.get(`/api/getById?id=${id}`);
       console.log(res.data.data, 'res.data.data==');
       setObj({ ...res.data.data[0] });
 

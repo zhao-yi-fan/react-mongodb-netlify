@@ -13,7 +13,7 @@ function ArticleListInit () {
   useEffect(() => {
     async function fetchData () {
 
-      let res = await axios.get('/.netlify/functions/postAll');
+      let res = await axios.get('/api/postAll');
       console.log(res.data.data, 'res.data.data==');
       setData(res.data.data);
 
