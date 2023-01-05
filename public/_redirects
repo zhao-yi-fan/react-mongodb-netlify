@@ -1,3 +1,0 @@
-/api/postAll /.netlify/functions/postAll 200
-/api/postContent /.netlify/functions/postContent 200
-/api/getById /.netlify/functions/getById 200
