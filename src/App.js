@@ -1,20 +1,15 @@
 import { BrowserRouter as Router, Route, Routes, Navigate, NavLink } from "react-router-dom";
-import "./App.css";
-import Home from './home'
-import MessageBoard from './messageBoard'
-import Posts from './posts/index'
+import 'antd';
+import "./App.scss";
+import Home from './pages/home'
+import MessageBoard from './pages/messageBoard'
+import Posts from './pages/posts/index'
+import Top from './pages/Top'
 
 function App () {
   return (
     <Router>
-      <div className="top-f">
-        <div className="top">
-          <div className="nav-list">
-            <NavLink to="/index" className="link">主页</NavLink>
-            <NavLink to="/message-board" className="link">留言板</NavLink>
-          </div>
-        </div>
-      </div>
+      <Top />
       <Routes>
         <Route path="/index" element={<Home />}></Route>
         <Route path="/message-board" element={<MessageBoard />}></Route>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios';
-import "./messageBoard.css"
+import "./messageBoard.scss"
 
 
 function ArticleListInit () {
@@ -82,9 +82,7 @@ function InitDetail () {
       </div>
       <div className="message-board-right">
         <p className="message-board-right-title">最新文章</p>
-        {
-          ArticleListInit()
-        }
+        <ArticleListInit />
       </div>
     </div>
 
