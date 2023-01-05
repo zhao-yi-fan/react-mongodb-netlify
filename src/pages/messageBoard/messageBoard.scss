@@ -7,12 +7,8 @@
   padding: 30px;
   border-radius: 8px;
   box-shadow: 2px 2px 8px 0px #81817a;
-  transition: all 0.4s;
+  transition: all 0.2s;
   justify-content: space-between;
-
-  &:hover {
-    box-shadow: 2px 2px 15px 0px #81817a;
-  }
   .message-board-left {
     padding: 20px;
     .form-title {
@@ -33,7 +29,7 @@
     padding: 15px 20px;
     overflow: hidden;
     border-radius: 8px;
-    transition: all 0.5s;
+    transition: all 0.2s;
     box-shadow: 2px 2px 8px 0px #81817a;
     .message-board-right-title {
       font-weight: bold;
@@ -42,19 +38,18 @@
     .posts-item {
       padding: 15px 0;
       border-bottom: 1px dashed #ccc;
-      transition: all 0.5s;
+      transition: all 0.2s;
+      cursor: pointer;
       &:hover {
-        cursor: pointer;
         .posts-title {
           color: #06f;
-          font-size: 19px;
         }
       }
       .posts-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        transition: all 0.5s;
+        transition: all 0.2s;
         .title {
           font-weight: bold;
           font-size: 18px;

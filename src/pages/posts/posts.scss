@@ -6,10 +6,7 @@
   padding: 30px;
   border-radius: 8px;
   box-shadow: 2px 2px 8px 0px #81817a;
-  transition: all 0.4s;
-  &:hover {
-    box-shadow: 2px 2px 15px 0px #81817a;
-  }
+  transition: all 0.2s;
   .posts-title {
     display: flex;
     justify-content: space-between;
