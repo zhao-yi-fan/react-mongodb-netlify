@@ -1,0 +1,12 @@
+.auto-form {
+  display: flex;
+  .view {
+    flex: 1;
+  }
+  .code {
+    width: 400px;
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+  }
+}

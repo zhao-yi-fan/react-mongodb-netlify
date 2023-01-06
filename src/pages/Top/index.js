@@ -55,6 +55,7 @@ export default function Top () {
         <div className="nav-list">
           <NavLink to="/index" className="link">主页</NavLink>
           <NavLink to="/message-board" className="link">留言板</NavLink>
+          <NavLink to="/form" className="link">表单</NavLink>
           {
             state.username ?
               (
