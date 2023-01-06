@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // Replace the uri string with your MongoDB deployment's connection string.
-const uri = "mongodb+srv://s1155123456:1qaz2wsx@cluster0.pz2zf.mongodb.net/my_asg3_db";
+const uri = "mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.pz2zf.mongodb.net/my_asg3_db";
 
 exports.conn = async function () {
   let connection = await mongoose.createConnection(uri);
