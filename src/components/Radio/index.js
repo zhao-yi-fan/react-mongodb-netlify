@@ -1,12 +1,12 @@
 import { Radio, Space, Form } from 'antd'
 
 function RadioComponent (props) {
-  const options = props.options || []
+  const { options, label, name, rules, ...restProps } = props || {}
   return (
     <Form.Item
-      label={props.label}
-      name={props.name}
-      rules={props.rules}
+      label={label}
+      name={name}
+      rules={rules}
     >
       <Radio.Group >
         <Space direction="vertical">

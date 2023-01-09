@@ -4,9 +4,14 @@ import { Button, Form } from 'antd';
 import { Input, Radio } from '../../components/index.js';
 import './index.scss';
 
+const components = {
+  'Input': Input,
+  'Radio': Radio,
+}
+
 const config = [
   {
-    type: Input,
+    type: 'Input',
     placeholder: '请输入',
     name: 'username',
     label: '姓名',
@@ -18,7 +23,7 @@ const config = [
     ]
   },
   {
-    type: Radio,
+    type: 'Radio',
     placeholder: 'xxx2',
     name: 'xxx2',
     label: 'xxx2',
@@ -67,7 +72,8 @@ function AutoForm () {
         >
           {
             dataModel.map((item, index) => {
-              return <item.type key={index} {...item} />
+              const Component = components[item.type]; // 变量要大写
+              return <Component key={index} {...item} />
             })
           }
           <Form.Item
