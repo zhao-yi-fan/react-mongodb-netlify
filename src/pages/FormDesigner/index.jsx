@@ -19,12 +19,16 @@ import { Button, Space, message, Modal, Input, Typography } from 'antd';
 import {
   SaveOutlined,
   EyeOutlined,
-  DeleteOutlined,
   ExportOutlined,
   ImportOutlined,
   ClearOutlined,
+  DoubleLeftOutlined,
+  DoubleRightOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import ComponentPanel from './ComponentPanel';
+import DroppableCanvas from './DroppableCanvas';
 import CanvasItem from './CanvasItem';
 import PropertyPanel from './PropertyPanel';
 import FormPreviewModal from './FormPreviewModal';
@@ -50,6 +54,8 @@ export default function FormDesigner() {
   const [saving, setSaving] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [importJson, setImportJson] = useState('');
+  const [leftCollapsed, setLeftCollapsed] = useState(false);
+  const [rightCollapsed, setRightCollapsed] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -80,14 +86,17 @@ export default function FormDesigner() {
     const { active, over } = event;
     setActiveId(null);
 
-    if (!over) return;
-
     const activeType = active.data?.current?.type;
 
     if (activeType === 'component') {
       const compKey = active.data.current.compKey;
       const template = COMPONENT_LIST.find((c) => c.key === compKey);
       if (!template) return;
+
+      // 必须拖到画布区域（canvas droppable 或已有字段上）才生效
+      if (!over) return;
+      const isCanvasDrop = over.id === 'canvas' || fields.some((f) => f.id === over.id);
+      if (!isCanvasDrop) return;
 
       const newField = {
         id: genId(),
@@ -115,6 +124,7 @@ export default function FormDesigner() {
       return;
     }
 
+    if (!over) return;
     if (active.id !== over.id) {
       setFields((prev) => {
         const oldIndex = prev.findIndex((f) => f.id === active.id);
@@ -244,34 +254,53 @@ export default function FormDesigner() {
         onDragEnd={handleDragEnd}
       >
         <div className="designer-body">
-          <div className="designer-left">
-            <ComponentPanel />
+          <div className={`designer-left ${leftCollapsed ? 'collapsed' : ''}`}>
+            {leftCollapsed ? (
+              <div className="collapsed-panel" onClick={() => setLeftCollapsed(false)}>
+                <AppstoreOutlined />
+                <span className="collapsed-label">组件</span>
+                <DoubleRightOutlined className="collapsed-arrow" />
+              </div>
+            ) : (
+              <ComponentPanel onCollapse={() => setLeftCollapsed(true)} />
+            )}
           </div>
 
           <div className="designer-center" ref={canvasRef}>
             <div className="canvas-title">画布</div>
-            {fields.length === 0 ? (
-              <div className="canvas-empty">从左侧拖拽组件到此处</div>
-            ) : (
-              <SortableContext items={fields.map((f) => f.id)} strategy={verticalListSortingStrategy}>
-                {fields.map((field) => (
-                  <CanvasItem
-                    key={field.id}
-                    field={field}
-                    isSelected={selectedId === field.id}
-                    onSelect={() => setSelectedId(field.id)}
-                    onDelete={() => handleDeleteField(field.id)}
-                  />
-                ))}
-              </SortableContext>
-            )}
+            <DroppableCanvas>
+              {fields.length === 0 ? (
+                <div className="canvas-empty">从左侧拖拽组件到此处</div>
+              ) : (
+                <SortableContext items={fields.map((f) => f.id)} strategy={verticalListSortingStrategy}>
+                  {fields.map((field) => (
+                    <CanvasItem
+                      key={field.id}
+                      field={field}
+                      isSelected={selectedId === field.id}
+                      onSelect={() => setSelectedId(field.id)}
+                      onDelete={() => handleDeleteField(field.id)}
+                    />
+                  ))}
+                </SortableContext>
+              )}
+            </DroppableCanvas>
           </div>
 
-          <div className="designer-right">
-            <PropertyPanel
-              field={selectedField}
-              onUpdate={(updates) => selectedId && handleUpdateField(selectedId, updates)}
-            />
+          <div className={`designer-right ${rightCollapsed ? 'collapsed' : ''}`}>
+            {rightCollapsed ? (
+              <div className="collapsed-panel" onClick={() => setRightCollapsed(false)}>
+                <SettingOutlined />
+                <span className="collapsed-label">属性</span>
+                <DoubleLeftOutlined className="collapsed-arrow" />
+              </div>
+            ) : (
+              <PropertyPanel
+                field={selectedField}
+                onUpdate={(updates) => selectedId && handleUpdateField(selectedId, updates)}
+                onCollapse={() => setRightCollapsed(true)}
+              />
+            )}
           </div>
         </div>
 

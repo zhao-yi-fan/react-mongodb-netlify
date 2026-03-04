@@ -24,6 +24,11 @@
   .designer-left {
     width: 220px;
     flex-shrink: 0;
+    transition: width 0.25s ease;
+
+    &.collapsed {
+      width: 44px;
+    }
   }
 
   .designer-center {
@@ -44,6 +49,18 @@
       margin-bottom: 12px;
     }
 
+    .droppable-canvas {
+      min-height: 300px;
+      border: 2px dashed transparent;
+      border-radius: 8px;
+      transition: border-color 0.2s, background 0.2s;
+
+      &.drag-over {
+        border-color: #667eea;
+        background: rgba(102, 126, 234, 0.04);
+      }
+    }
+
     .canvas-empty {
       display: flex;
       align-items: center;
@@ -59,6 +76,70 @@
   .designer-right {
     width: 280px;
     flex-shrink: 0;
+    transition: width 0.25s ease;
+
+    &.collapsed {
+      width: 44px;
+    }
+  }
+
+  .collapsed-panel {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    gap: 12px;
+    cursor: pointer;
+    color: #8c8c8c;
+    font-size: 16px;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #667eea;
+    }
+
+    .collapsed-label {
+      writing-mode: vertical-rl;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 4px;
+    }
+
+    .collapsed-arrow {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8c8c8c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .collapse-btn {
+    color: #bfbfbf;
+    width: 28px;
+    height: 28px;
+
+    &:hover {
+      color: #667eea;
+      background: #f8f7ff;
+    }
   }
 }
 
@@ -70,15 +151,6 @@
   height: 100%;
   overflow-y: auto;
 
-  .panel-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #8c8c8c;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-
   .comp-grid {
     display: flex;
     flex-wrap: wrap;
@@ -87,17 +159,19 @@
 
   .comp-item {
     width: calc(50% - 4px);
-    padding: 10px 8px;
+    padding: 8px 6px;
     border: 1px solid #f0f0f0;
     border-radius: 8px;
     cursor: grab;
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 5px;
+    font-size: 12px;
     color: #595959;
     transition: all 0.2s;
     user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
 
     &:hover {
       border-color: #667eea;
@@ -110,7 +184,8 @@
     }
 
     .comp-icon {
-      font-size: 15px;
+      font-size: 14px;
+      flex-shrink: 0;
     }
   }
 }
@@ -194,15 +269,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   height: 100%;
   overflow-y: auto;
-
-  .panel-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #8c8c8c;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-  }
 
   .prop-list {
     .prop-item {

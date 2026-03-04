@@ -1,16 +1,25 @@
 import { Input, Switch, InputNumber, Button, Space, Divider, Empty, Typography } from 'antd';
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { PlusOutlined, MinusCircleOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
 const TYPES_WITH_OPTIONS = ['radio', 'checkbox', 'select'];
 const TYPES_WITH_PLACEHOLDER = ['input', 'textarea', 'number', 'select', 'datepicker'];
 
-export default function PropertyPanel({ field, onUpdate }) {
+export default function PropertyPanel({ field, onUpdate, onCollapse }) {
   if (!field) {
     return (
       <div className="property-panel">
-        <div className="panel-title">属性配置</div>
+        <div className="panel-header">
+          <div className="panel-title">属性配置</div>
+          <Button
+            type="text"
+            size="small"
+            icon={<DoubleRightOutlined />}
+            onClick={onCollapse}
+            className="collapse-btn"
+          />
+        </div>
         <Empty description="请选择一个字段" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{ marginTop: 60 }} />
       </div>
     );
@@ -37,7 +46,16 @@ export default function PropertyPanel({ field, onUpdate }) {
 
   return (
     <div className="property-panel">
-      <div className="panel-title">属性配置</div>
+      <div className="panel-header">
+        <div className="panel-title">属性配置</div>
+        <Button
+          type="text"
+          size="small"
+          icon={<DoubleRightOutlined />}
+          onClick={onCollapse}
+          className="collapse-btn"
+        />
+      </div>
       <div className="prop-list">
         <div className="prop-item">
           <Text className="prop-label">组件类型</Text>

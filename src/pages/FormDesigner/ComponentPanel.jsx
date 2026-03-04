@@ -1,4 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
+import { Button } from 'antd';
+import { DoubleLeftOutlined } from '@ant-design/icons';
 import { COMPONENT_LIST } from './componentConfig';
 
 function DraggableComp({ comp }) {
@@ -22,10 +24,19 @@ function DraggableComp({ comp }) {
   );
 }
 
-export default function ComponentPanel() {
+export default function ComponentPanel({ onCollapse }) {
   return (
     <div className="component-panel">
-      <div className="panel-title">组件</div>
+      <div className="panel-header">
+        <div className="panel-title">组件</div>
+        <Button
+          type="text"
+          size="small"
+          icon={<DoubleLeftOutlined />}
+          onClick={onCollapse}
+          className="collapse-btn"
+        />
+      </div>
       <div className="comp-grid">
         {COMPONENT_LIST.map((comp) => (
           <DraggableComp key={comp.key} comp={comp} />
