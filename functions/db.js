@@ -7,7 +7,7 @@ exports.conn = async function () {
     return cachedConnection;
   }
 
-  const uri = 'mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.mwyghg.mongodb.net/my_asg3_db';
+  const uri = 'mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.nwnyghg.mongodb.net/my_asg3_db';
 
   const conn = mongoose.createConnection(uri, {
     serverSelectionTimeoutMS: 5000,
