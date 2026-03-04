@@ -1,0 +1,31 @@
+.form-preview-page {
+  max-width: 720px;
+  margin: 0 auto;
+
+  .loading-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  .back-btn {
+    color: #666;
+    padding-left: 0;
+    margin-bottom: 16px;
+
+    &:hover {
+      color: #667eea;
+    }
+  }
+
+  .preview-card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+    .ant-card-body {
+      padding: 32px;
+    }
+  }
+}

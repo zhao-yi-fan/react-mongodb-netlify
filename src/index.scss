@@ -140,10 +140,12 @@ a:hover {
 }
 
 html {
-  background-color: #f5f6f8;
+  background-color: #f0f2f5;
 }
 
 html,
-body {
-  height: auto !important;
+body,
+#root {
+  height: 100%;
+  margin: 0;
 }

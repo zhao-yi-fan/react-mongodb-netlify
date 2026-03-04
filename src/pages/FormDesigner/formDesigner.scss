@@ -1,0 +1,226 @@
+.form-designer-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px - 48px);
+
+  .designer-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .designer-body {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .designer-left {
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .designer-center {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    min-height: 400px;
+
+    .canvas-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #8c8c8c;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .canvas-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      color: #bfbfbf;
+      font-size: 15px;
+      border: 2px dashed #e8e8e8;
+      border-radius: 8px;
+    }
+  }
+
+  .designer-right {
+    width: 280px;
+    flex-shrink: 0;
+  }
+}
+
+.component-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  height: 100%;
+  overflow-y: auto;
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8c8c8c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .comp-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .comp-item {
+    width: calc(50% - 4px);
+    padding: 10px 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #595959;
+    transition: all 0.2s;
+    user-select: none;
+
+    &:hover {
+      border-color: #667eea;
+      color: #667eea;
+      background: #f8f7ff;
+    }
+
+    &.dragging {
+      opacity: 0.5;
+    }
+
+    .comp-icon {
+      font-size: 15px;
+    }
+  }
+}
+
+.canvas-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #d9d9d9;
+  }
+
+  &.selected {
+    border-color: #667eea;
+    background: #f8f7ff;
+  }
+
+  .canvas-item-handle {
+    cursor: grab;
+    padding: 4px;
+    color: #bfbfbf;
+    margin-right: 8px;
+    margin-top: 2px;
+
+    &:hover {
+      color: #667eea;
+    }
+  }
+
+  .canvas-item-content {
+    flex: 1;
+    min-width: 0;
+
+    .canvas-item-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 6px;
+
+      .required-mark {
+        color: #ff4d4f;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .canvas-item-actions {
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover .canvas-item-actions,
+  &.selected .canvas-item-actions {
+    opacity: 1;
+  }
+}
+
+.drag-overlay-item {
+  padding: 10px 16px;
+  background: #fff;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.property-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  height: 100%;
+  overflow-y: auto;
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8c8c8c;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .prop-list {
+    .prop-item {
+      margin-bottom: 14px;
+
+      .prop-label {
+        display: block;
+        font-size: 12px;
+        color: #8c8c8c;
+        margin-bottom: 4px;
+      }
+    }
+
+    .option-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+  }
+}

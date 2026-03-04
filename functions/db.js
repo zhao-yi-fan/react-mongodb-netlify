@@ -33,6 +33,24 @@ exports.conn = async function () {
     createTime: String,
   }));
 
+  conn.model('users', new mongoose.Schema({
+    username: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    email: { type: String, default: '' },
+    role: { type: String, default: 'user', enum: ['admin', 'user'] },
+    createdAt: { type: String, default: () => new Date().toISOString() },
+  }));
+
+  conn.model('forms', new mongoose.Schema({
+    name: { type: String, required: true },
+    description: { type: String, default: '' },
+    schema: { type: mongoose.Schema.Types.Mixed, default: [] },
+    previewImage: { type: String, default: '' },
+    createdBy: { type: String, default: '' },
+    createdAt: { type: String, default: () => new Date().toISOString() },
+    updatedAt: { type: String, default: () => new Date().toISOString() },
+  }));
+
   cachedConnection = conn;
   return cachedConnection;
 };
