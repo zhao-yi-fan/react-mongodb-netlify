@@ -1,28 +1,26 @@
-let {conn} = require('./db')
+const { conn } = require('./db');
+const { success, error, methodNotAllowed, preflight } = require('./utils/response');
 
-// Reference: https://docs.netlify.com/functions/build-with-javascript/#synchronous-function-format
 exports.handler = async function (event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  const connection = await conn();
+
+  if (event.httpMethod === 'OPTIONS') return preflight();
+  if (event.httpMethod !== 'GET') return methodNotAllowed('GET');
+
   try {
-    if (event.httpMethod === "GET") {
-      let r = await connection.model('posts').find({})
-      console.log(r, 'r==');
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ data: r }),
-      };
-    }
-    else {
-      return {
-        statue: 405,
-        body: "Method not supported"
-      }
-    }
+    const connection = await conn();
+    const params = event.queryStringParameters || {};
+    const page = Math.max(1, parseInt(params.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(params.limit, 10) || 20));
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      connection.model('posts').find({}).sort({ _id: -1 }).skip(skip).limit(limit),
+      connection.model('posts').countDocuments({}),
+    ]);
+
+    return success({ data, pagination: { page, limit, total } });
   } catch (err) {
-    return { statusCode: 500, body: err.toString() }
+    return error(err.message);
   }
-
-
-
 };

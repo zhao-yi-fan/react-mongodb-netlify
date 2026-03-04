@@ -1,0 +1,30 @@
+---
+description: React 组件与 Hooks 开发规范
+globs: src/**/*.jsx
+alwaysApply: false
+---
+
+# React 开发规范
+
+## 组件
+
+- 只使用函数组件，禁止 class 组件
+- 使用 `export default` 导出页面组件
+- Props 使用解构赋值
+
+## Hooks
+
+- 数据请求放在 `useEffect` 中，提供正确的依赖数组
+- 状态管理使用 Redux Toolkit 的 `useSelector` / `useDispatch`
+- 禁止直接 `store.getState()` 或 `store.dispatch()`
+
+## Ant Design 5
+
+- 按需导入: `import { Button } from 'antd'`
+- 不需要手动导入 CSS，antd v5 使用 CSS-in-JS
+- Modal 使用 `open` 属性（非 `visible`）
+
+## 路由
+
+- 使用 React Router 7 的 `<Routes>` + `<Route>` 声明式路由
+- 编程式导航使用 `useNavigate()`

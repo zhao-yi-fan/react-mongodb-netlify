@@ -1,30 +1,34 @@
-let {conn} = require('./db')
+const mongoose = require('mongoose');
+const { conn } = require('./db');
+const { success, error, methodNotAllowed, preflight } = require('./utils/response');
 
-// Reference: https://docs.netlify.com/functions/build-with-javascript/#synchronous-function-format
 exports.handler = async function (event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  const connection = await conn();
+
+  if (event.httpMethod === 'OPTIONS') return preflight();
+  if (event.httpMethod !== 'GET') return methodNotAllowed('GET');
+
   try {
-    if (event.httpMethod === "GET") {
-      const { id } = event.queryStringParameters;
-      const ObjectId = require('mongodb').ObjectId;
-      let r = await connection.model('posts').find({ _id: ObjectId(id) })
-      console.log(r);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ data: r }),
-      };
+    const params = event.queryStringParameters || {};
+    const { id } = params;
+
+    if (!id) {
+      return error('Query parameter "id" is required', 400);
     }
-    else {
-      return {
-        statue: 405,
-        body: "Method not supported"
-      }
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return error('Invalid ObjectId format', 400);
     }
+
+    const connection = await conn();
+    const doc = await connection.model('posts').findById(id);
+
+    if (!doc) {
+      return error('Post not found', 404);
+    }
+
+    return success({ data: doc });
   } catch (err) {
-    return { statusCode: 500, body: err.toString() }
+    return error(err.message);
   }
-
-
-
 };

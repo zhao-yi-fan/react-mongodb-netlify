@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
-// Replace the uri string with your MongoDB deployment's connection string.
-const uri = "mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.pz2zf.mongodb.net/my_asg3_db";
+
+let cachedConnection = null;
 
 exports.conn = async function () {
-  let connection = await mongoose.createConnection(uri);
+  if (cachedConnection && cachedConnection.readyState === 1) {
+    return cachedConnection;
+  }
+
+  const uri = 'mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.pz2zf.mongodb.net/my_asg3_db';
+
+  cachedConnection = await mongoose.createConnection(uri, {
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+  });
 
   const postSchema = new mongoose.Schema({
     title: String,
     description: String,
     contents: String,
     createTime: String,
-    // The schema is incomplete...
   });
 
-  connection.model('posts', postSchema); // 设置固定的名字， 否则会首字母小写，后尾加s
-  connection.on('error', function () { //监听是否有异常
-    console.log("Connection error");
-  });
-  connection.once('open', function () { //监听一次打开
-    //在这里创建你的模式和模型
-    console.log('connected!');
-  });
-  connection.on('disconnected', function () {
-    console.log('Mongoose connection disconnected');
-  });
-  return connection;
+  cachedConnection.model('posts', postSchema);
 
-}
+  cachedConnection.on('error', (err) => {
+    console.error('MongoDB connection error:', err.message);
+    cachedConnection = null;
+  });
+
+  cachedConnection.on('disconnected', () => {
+    cachedConnection = null;
+  });
+
+  return cachedConnection;
+};

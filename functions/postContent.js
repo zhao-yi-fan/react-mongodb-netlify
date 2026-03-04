@@ -1,35 +1,39 @@
-let {conn} = require('./db')
+const { conn } = require('./db');
+const { success, error, methodNotAllowed, preflight } = require('./utils/response');
 
-// Reference: https://docs.netlify.com/functions/build-with-javascript/#synchronous-function-format
 exports.handler = async function (event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
-  const connection = await conn();
+
+  if (event.httpMethod === 'OPTIONS') return preflight();
+  if (event.httpMethod !== 'POST') return methodNotAllowed('POST');
+
   try {
-    if (event.httpMethod === "POST") {
+    if (!event.body) {
+      return error('Request body is required', 400);
+    }
 
-      const {title,description,contents,createTime} = JSON.parse(event.body);
-      const obj = {
-        title,
-        description,
-        contents,
-        createTime
-      }
-      let r1 = await connection.model('posts').create(obj);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ data: r1._id }),
-      };
+    let body;
+    try {
+      body = JSON.parse(event.body);
+    } catch {
+      return error('Invalid JSON in request body', 400);
     }
-    else {
-      return {
-        statue: 405,
-        body: "Method not supported"
-      }
+
+    const { title, description, contents, createTime } = body;
+    if (!title || !contents) {
+      return error('title and contents are required', 400);
     }
+
+    const connection = await conn();
+    const doc = await connection.model('posts').create({
+      title,
+      description: description || '',
+      contents,
+      createTime: createTime || new Date().toISOString(),
+    });
+
+    return success({ data: doc._id }, 201);
   } catch (err) {
-    return { statusCode: 500, body: err.toString() }
+    return error(err.message);
   }
-
-
-
 };

@@ -1,0 +1,38 @@
+---
+description: Netlify Serverless Functions 开发规范
+globs: functions/**/*.js
+alwaysApply: false
+---
+
+# Serverless Functions 规范
+
+## 函数结构
+
+```javascript
+const { conn } = require('./db');
+const { success, error, methodNotAllowed, preflight } = require('./utils/response');
+
+exports.handler = async function (event, context) {
+  context.callbackWaitsForEmptyEventLoop = false;
+  if (event.httpMethod === 'OPTIONS') return preflight();
+  if (event.httpMethod !== 'GET') return methodNotAllowed('GET');
+
+  try {
+    const connection = await conn();
+    // 业务逻辑...
+    return success({ data: result });
+  } catch (err) {
+    return error(err.message);
+  }
+};
+```
+
+## 关键规则
+
+- 使用 `functions/utils/response.js` 统一响应格式和 CORS headers
+- MongoDB 连接通过 `functions/db.js` 获取，内置连接缓存
+- 连接字符串从 `process.env.MONGODB_URI` 读取
+- 始终设置 `context.callbackWaitsForEmptyEventLoop = false`
+- 处理 OPTIONS 预检请求
+- 校验输入参数，返回 400 错误而非让程序崩溃
+- 使用 `mongoose.Types.ObjectId.isValid()` 校验 ObjectId

@@ -1,22 +1,23 @@
-import * as actionTypes from '../action-types'
+import { createSlice } from '@reduxjs/toolkit';
 
-const intialState = {
-  username: '',
-  password: ''
-}
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    username: '',
+    password: '',
+  },
+  reducers: {
+    setUserName(state, action) {
+      const { username, password } = action.payload;
+      state.username = username;
+      state.password = password;
+    },
+    clearUserInfo(state) {
+      state.username = '';
+      state.password = '';
+    },
+  },
+});
 
-function counter1 (state = intialState, action) {
-  switch (action.type) {
-    case actionTypes.SET_NAME:
-      const { username, password } = action.loginInfo;
-      console.log(action, '111111111111');
-      return { ...state, username, password }
-    case actionTypes.CLEAR_INFO:
-      console.log(action, '2222');
-      return { ...state, username: '', password: '' }
-    default:
-      return state;
-  }
-}
-
-export default counter1;
+export const { setUserName, clearUserInfo } = userSlice.actions;
+export default userSlice.reducer;
