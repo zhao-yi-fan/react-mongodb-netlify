@@ -9,28 +9,30 @@ exports.conn = async function () {
 
   const uri = 'mongodb+srv://superadmin:cGg9D9YwbY4mQke@cluster0.mwyghg.mongodb.net/my_asg3_db';
 
-  cachedConnection = await mongoose.createConnection(uri, {
+  const conn = mongoose.createConnection(uri, {
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000,
+    bufferCommands: false,
   });
 
-  const postSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    contents: String,
-    createTime: String,
-  });
-
-  cachedConnection.model('posts', postSchema);
-
-  cachedConnection.on('error', (err) => {
+  conn.on('error', (err) => {
     console.error('MongoDB connection error:', err.message);
     cachedConnection = null;
   });
 
-  cachedConnection.on('disconnected', () => {
+  conn.on('disconnected', () => {
     cachedConnection = null;
   });
 
+  await conn.asPromise();
+
+  conn.model('posts', new mongoose.Schema({
+    title: String,
+    description: String,
+    contents: String,
+    createTime: String,
+  }));
+
+  cachedConnection = conn;
   return cachedConnection;
 };
