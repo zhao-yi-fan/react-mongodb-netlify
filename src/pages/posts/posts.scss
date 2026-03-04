@@ -1,33 +1,63 @@
 .posts-detail {
-  margin: 10px auto 0;
-  box-sizing: border-box;
-  width: 1200px;
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 32px;
   background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 8px 0px #81817a;
-  transition: all 0.2s;
-  .posts-title {
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  .loading-wrap {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    color: #252933;
-    .title {
-      font-weight: bold;
-      font-size: 28px;
-    }
-    .time {
-      width: 250px;
-      font-size: 14px;
+    min-height: 300px;
+    color: #999;
+    font-size: 15px;
+  }
+
+  .back-btn {
+    color: #666;
+    padding-left: 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+
+    &:hover {
+      color: #1677ff;
     }
   }
-  .posts-content {
-    text-indent: 2em;
-    line-height: 30px;
-    margin-top: 40px;
+
+  .detail-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .detail-meta {
+    font-size: 13px;
+    color: #bbb;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .detail-desc {
+    font-size: 15px;
+    color: #666;
+    background: #f9fafb;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    border-left: 3px solid #1677ff;
+  }
+
+  .detail-content {
     font-size: 16px;
-    word-break: break-all;
-    min-height: 300px;
+    line-height: 1.8;
     color: #333;
+    min-height: 200px;
+    text-indent: 2em;
+    word-break: break-all;
   }
 }
